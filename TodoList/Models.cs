@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 
-public partial class Project
+public class Project
 {
-  public int Id { get; set;}
+  public int Id { get; set; }
   public string Title { get; set; }
   public string? Description { get; set; }
-  public DateTime DateCreated { get; set; }
+  public DateTime DateCreated { get; set; } = DateTime.Now.ToUniversalTime();
   public ICollection<Todo> Todos { get; } = new List<Todo>();
 }
 
-public partial class Todo
+public class Todo
 {
   public int Id { get; set;}
   public string Title { get; set; }
