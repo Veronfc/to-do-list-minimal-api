@@ -1,17 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 
+public class User
+{
+  public int Id { get; set; }
+  public string? Name { get; set; }
+  public string Username { get; set; }
+  public string Password { get; set; }
+  public ICollection<Project> Projects { get; } = new List<Project>();
+}
+
 public class Project
 {
   public int Id { get; set; }
   public string Title { get; set; }
   public string? Description { get; set; }
   public DateTime DateCreated { get; set; } = DateTime.Now.ToUniversalTime();
+  public int UserId { get; set; }
+  public User? User { get; set; }
   public ICollection<Todo> Todos { get; } = new List<Todo>();
 }
 
 public class Todo
 {
-  public int Id { get; set;}
+  public int Id { get; set; }
   public string Title { get; set; }
   public string Description { get; set; }
   public DateTime? DueDate { get; set; }
@@ -27,4 +38,5 @@ class TodoListDB : DbContext
   public TodoListDB(DbContextOptions<TodoListDB> options) : base(options) { }
   public DbSet<Project> Projects { get; set; }
   public DbSet<Todo> Todos { get; set; }
+  public DbSet<User> Users { get; set; }
 }
