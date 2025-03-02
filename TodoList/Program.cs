@@ -35,6 +35,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+//Done
 app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
@@ -53,6 +54,7 @@ app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string 
   }
 }).DisableAntiforgery();
 
+//Done
 app.MapPost("/signup", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password, [FromForm] string name) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
@@ -82,6 +84,7 @@ app.MapPost("/signup", async (TodoListDB db, AuthService auth, [FromForm] string
   }
 }).DisableAntiforgery();
 
+//Done
 app.MapGet("/projects", async (TodoListDB db, [FromHeader] int userId) =>
 {
   try
@@ -94,11 +97,12 @@ app.MapGet("/projects", async (TodoListDB db, [FromHeader] int userId) =>
   }
 }).AddEndpointFilter<AuthFilter>();
 
+//Done
 app.MapGet("/project/{id}", async (TodoListDB db, int id) =>
 {
   try
   {
-    var project = await db.Projects.FindAsync(id);
+    var project = await db.Projects.Include(p => p.Todos).FirstOrDefaultAsync(p => p.Id == id);
     if (project == null) return Results.NotFound();
     return Results.Ok(project);
   }
@@ -108,6 +112,7 @@ app.MapGet("/project/{id}", async (TodoListDB db, int id) =>
   }
 }).AddEndpointFilter<AuthFilter>();
 
+//Done
 app.MapPost("/project", async (TodoListDB db, Project project) =>
 {
   try
@@ -125,6 +130,7 @@ app.MapPost("/project", async (TodoListDB db, Project project) =>
 
 }).AddEndpointFilter<AuthFilter>();
 
+//Done
 app.MapPut("/project/{id}", async (TodoListDB db, Project update, int id) =>
 {
   try
@@ -133,11 +139,12 @@ app.MapPut("/project/{id}", async (TodoListDB db, Project update, int id) =>
 
     if (project == null) return Results.NotFound();
 
-    db.Projects.Entry(project).CurrentValues.SetValues(update);
+    project.Title = update.Title;
+    project.Description = update.Description;
 
     await db.SaveChangesAsync();
 
-    return Results.NoContent();
+    return Results.Ok(project);
   }
   catch
   {
@@ -145,11 +152,13 @@ app.MapPut("/project/{id}", async (TodoListDB db, Project update, int id) =>
   }
 }).AddEndpointFilter<AuthFilter>();
 
-app.MapPost("/project/todo", async (TodoListDB db, Todo todo, int projectId) =>
+//Done
+app.MapPost("/project/{id}/todo", async (TodoListDB db, Todo todo, int id) =>
 {
   try
   {
-    var project = await db.Projects.FindAsync(projectId);
+    var project = await db.Projects.FindAsync(id);
+    todo.ProjectId=id;
     project.Todos.Add(todo);
 
     await db.SaveChangesAsync();
@@ -162,6 +171,7 @@ app.MapPost("/project/todo", async (TodoListDB db, Todo todo, int projectId) =>
   }
 }).AddEndpointFilter<AuthFilter>();
 
+//Done
 app.MapPut("/project/todo/{id}", async (TodoListDB db, Todo update, int id) =>
 {
   try
@@ -170,11 +180,15 @@ app.MapPut("/project/todo/{id}", async (TodoListDB db, Todo update, int id) =>
 
     if (todo == null) return Results.NotFound();
 
-    db.Todos.Entry(todo).CurrentValues.SetValues(update);
+    todo.Title = update.Title;
+    todo.Description = update.Description;
+    todo.DueDate = update.DueDate;
+    todo.Priority = update.Priority;
+    todo.Done = update.Done;
 
     await db.SaveChangesAsync();
 
-    return Results.NoContent();
+    return Results.Ok(todo);
   }
   catch
   {
