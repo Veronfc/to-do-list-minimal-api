@@ -144,3 +144,9 @@
 /home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/home/veronfc/repos/dotnet-to-do-list/TodoList/obj/Debug/net8.0/TodoList.MvcApplicationPartsAssemblyInfo.cs
+/home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
+/home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Microsoft.OpenApi.dll
+/home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/veronfc/repos/dotnet-to-do-list/TodoList/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll

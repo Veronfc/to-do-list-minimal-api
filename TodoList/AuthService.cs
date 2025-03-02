@@ -14,7 +14,7 @@ public class AuthService
 
   public string GenerateJwtToken(string username)
   {
-    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(DotNetEnv.Env.GetString("JWT_KEY")));
 
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
