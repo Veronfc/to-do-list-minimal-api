@@ -35,6 +35,8 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.MapGet("/", () => "Welcome to my API");
+
 //Done
 app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password) =>
 {
