@@ -33,7 +33,20 @@ builder.Services.AddSingleton<AuthService>();
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy(name: "AllowAllOrigins",
+    configurePolicy: policy =>
+    {
+      policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGet("/", () => "Welcome to my API");
 
@@ -160,7 +173,7 @@ app.MapPost("/project/{id}/todo", async (TodoListDB db, Todo todo, int id) =>
   try
   {
     var project = await db.Projects.FindAsync(id);
-    todo.ProjectId=id;
+    todo.ProjectId = id;
     project.Todos.Add(todo);
 
     await db.SaveChangesAsync();
