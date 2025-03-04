@@ -48,10 +48,10 @@ app.UseCors("AllowAllOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", () => "Welcome to my API");
+app.MapGet("/", () => new {message="Welcome to my API"});
 
 //Done
-app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password) =>
+app.MapPost("/login", async (TodoListDB db, AuthService auth, string username, string password) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
 
@@ -70,7 +70,7 @@ app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string 
 }).DisableAntiforgery();
 
 //Done
-app.MapPost("/signup", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password, [FromForm] string name) =>
+app.MapPost("/signup", async (TodoListDB db, AuthService auth, string username, string password, string name) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
 
