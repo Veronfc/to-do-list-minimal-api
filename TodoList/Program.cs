@@ -51,7 +51,7 @@ app.UseAuthorization();
 app.MapGet("/", () => new {message="Welcome to my API"});
 
 //Done
-app.MapPost("/login", async (TodoListDB db, AuthService auth, string username, string password) =>
+app.MapPost("/login", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
 
@@ -70,7 +70,7 @@ app.MapPost("/login", async (TodoListDB db, AuthService auth, string username, s
 }).DisableAntiforgery();
 
 //Done
-app.MapPost("/signup", async (TodoListDB db, AuthService auth, string username, string password, string name) =>
+app.MapPost("/signup", async (TodoListDB db, AuthService auth, [FromForm] string username, [FromForm] string password, [FromForm] string name) =>
 {
   var user = await db.Users.FirstOrDefaultAsync(user => user.Username == username);
 
