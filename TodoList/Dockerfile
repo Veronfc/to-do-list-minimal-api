@@ -3,8 +3,6 @@ WORKDIR /app
 EXPOSE 5000
 
 ENV ASPNETCORE_URLS=http://+:5000
-ENV CONN_STRING="User Id=postgres.teilpuqrwdvayjhjnvsg;Password=hwmK55c5cyIZSnYt;Server=aws-0-eu-central-1.pooler.supabase.com;Port=5432;Database=postgres"
-ENV JWT_KEY="This!Is@A#SuperSecret%Key^That&Im*Using(To)Test_Jwt+Authentication"
 
 USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
